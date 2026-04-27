@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Allan Barbers – Saint Helens</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --black: #070709;
+    --white: #f0eee9;
+    --red: #c0392b;
+    --red-light: #e74c3c;
+    --grey: #111113;
+    --grey2: #191919;
+    --mid: #666;
+    --border: rgba(255,255,255,0.06);
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'DM Sans', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--black); }
+  ::-webkit-scrollbar-thumb { background: var(--red); }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.4rem 4rem;
+    background: rgba(7,7,9,0.93); backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(192,57,43,0.15);
+  }
+  .nav-logo { font-family: 'Bebas Neue', sans-serif; font-size: 2.2rem; color: var(--white); letter-spacing: 0.06em; }
+  .nav-logo span { color: var(--red); }
+  .nav-links { display: flex; gap: 2.8rem; list-style: none; }
+  .nav-links a { color: var(--white); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.55; transition: opacity 0.2s, color 0.2s; }
+  .nav-links a:hover { opacity: 1; color: var(--red-light); }
+  .nav-book { background: var(--red); color: var(--white); border: none; padding: 0.7rem 1.8rem; font-family: 'DM Sans', sans-serif; font-size: 0.78rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+  .nav-book:hover { background: var(--red-light); }
+
+  /* HERO */
+  .hero { height: 100vh; min-height: 700px; position: relative; display: flex; align-items: center; padding: 0 4rem; overflow: hidden; }
+  .hero-bg { position: absolute; inset: 0; background: url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=80') center/cover no-repeat; }
+  .hero-ov1 { position: absolute; inset: 0; background: linear-gradient(105deg, rgba(7,7,9,0.97) 45%, rgba(7,7,9,0.4) 100%); }
+  .hero-ov2 { position: absolute; inset: 0; background: linear-gradient(to top, rgba(7,7,9,0.6) 0%, transparent 60%); }
+  .hero-content { position: relative; z-index: 2; max-width: 680px; }
+  .hero-pill { display: inline-flex; align-items: center; gap: 0.6rem; border: 1px solid rgba(192,57,43,0.4); background: rgba(192,57,43,0.1); padding: 0.4rem 1.1rem; margin-bottom: 2rem; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-light); animation: fadeUp 0.6s 0.1s both; }
+  .hero h1 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(5rem, 13vw, 11rem); line-height: 0.86; letter-spacing: 0.01em; margin-bottom: 1.8rem; animation: fadeUp 0.7s 0.25s both; }
+  .hero h1 span { color: var(--red); }
+  .hero-desc { font-size: 1rem; color: rgba(240,238,233,0.55); line-height: 1.85; max-width: 420px; margin-bottom: 2.8rem; font-weight: 300; animation: fadeUp 0.7s 0.4s both; }
+  .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; animation: fadeUp 0.7s 0.55s both; }
+  .btn-red { background: var(--red); color: var(--white); border: none; padding: 1.05rem 2.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: background 0.2s, transform 0.15s; text-decoration: none; display: inline-block; }
+  .btn-red:hover { background: var(--red-light); transform: translateY(-2px); }
+  .btn-ghost { background: transparent; color: var(--white); border: 1px solid rgba(240,238,233,0.2); padding: 1.05rem 2.4rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: border-color 0.2s, color 0.2s; text-decoration: none; display: inline-block; }
+  .btn-ghost:hover { border-color: var(--red); color: var(--red-light); }
+  .hero-strip { position: absolute; bottom: 0; left: 0; right: 0; z-index: 2; display: flex; border-top: 1px solid var(--border); }
+  .hero-strip-item { flex: 1; padding: 1.5rem 2rem; border-right: 1px solid var(--border); text-align: center; background: rgba(7,7,9,0.85); backdrop-filter: blur(10px); }
+  .hero-strip-item:last-child { border-right: none; }
+  .hsi-num { font-family: 'Bebas Neue', sans-serif; font-size: 2.4rem; color: var(--red); line-height: 1; }
+  .hsi-label { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid); margin-top: 0.2rem; }
+
+  /* TICKER */
+  .ticker { background: var(--red); padding: 0.7rem 0; overflow: hidden; white-space: nowrap; }
+  .ticker-track { display: inline-flex; animation: ticker 25s linear infinite; }
+  .ti { font-family: 'Bebas Neue', sans-serif; font-size: 0.95rem; letter-spacing: 0.15em; color: rgba(255,255,255,0.9); padding: 0 2.5rem; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ABOUT */
+  .about { display: grid; grid-template-columns: 1fr 1fr; min-height: 560px; }
+  .about-photo { background: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=900&q=80') center/cover no-repeat; position: relative; }
+  .about-photo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to right, transparent 70%, var(--grey2)); }
+  .about-copy { background: var(--grey2); padding: 5rem 4rem; display: flex; flex-direction: column; justify-content: center; }
+  .tag { font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--red-light); margin-bottom: 1rem; }
+  .about-copy h2 { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1; margin-bottom: 1.5rem; }
+  .about-copy p { font-size: 0.9rem; color: rgba(240,238,233,0.55); line-height: 1.9; font-weight: 300; margin-bottom: 0.8rem; }
+  .about-nums { display: flex; gap: 2.5rem; margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border); }
+  .an-num { font-family: 'Bebas Neue', sans-serif; font-size: 3rem; color: var(--red); line-height: 1; }
+  .an-label { font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-top: 0.2rem; }
+
+  /* SERVICES */
+  #services { padding: 7rem 4rem; background: var(--black); }
+  .sh { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; flex-wrap: wrap; gap: 1rem; }
+  .st { font-family: 'Bebas Neue', sans-serif; font-size: clamp(3rem, 5vw, 5rem); line-height: 1; }
+  .svc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .svc-card { background: var(--grey); padding: 2.2rem 1.8rem; position: relative; overflow: hidden; transition: background 0.25s; cursor: default; }
+  .svc-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--red); transform: scaleY(0); transform-origin: bottom; transition: transform 0.3s; }
+  .svc-card:hover { background: #161616; }
+  .svc-card:hover::before { transform: scaleY(1); }
+  .svc-icon { font-size: 1.6rem; margin-bottom: 1rem; }
+  .svc-name { font-family: 'Bebas Neue', sans-serif; font-size: 1.4rem; margin-bottom: 0.5rem; letter-spacing: 0.04em; }
+  .svc-desc { font-size: 0.8rem; color: var(--mid); line-height: 1.6; font-weight: 300; }
+
+  /* GALLERY */
+  #gallery { background: var(--black); }
+  .gal-header { padding: 5rem 4rem 2rem; }
+  .gal-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr; grid-template-rows: 280px 280px; gap: 4px; }
+  .gi { overflow: hidden; position: relative; }
+  .gi:first-child { grid-row: 1/3; }
+  .gi img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; filter: brightness(0.7) saturate(0.9); }
+  .gi:hover img { transform: scale(1.08); filter: brightness(0.95) saturate(1); }
+
+  /* BOOKING */
+  #booking { padding: 7rem 4rem; background: var(--grey2); }
+  .bk-grid { display: grid; grid-template-columns: 1fr 1.3fr; gap: 6rem; margin-top: 3rem; align-items: start; }
+  .bk-side-img { background: url('https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&q=80') center/cover no-repeat; height: 260px; margin-bottom: 2.5rem; position: relative; }
+  .bk-side-img::after { content: ''; position: absolute; inset: 0; background: rgba(7,7,9,0.35); }
+  .bk-badge { position: absolute; bottom: 1.5rem; left: 1.5rem; z-index: 1; background: var(--red); color: var(--white); font-family: 'Bebas Neue', sans-serif; font-size: 1.1rem; padding: 0.35rem 1rem; letter-spacing: 0.08em; }
+  .ib { margin-bottom: 1.3rem; padding-bottom: 1.3rem; border-bottom: 1px solid var(--border); }
+  .ib-lbl { font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--red-light); margin-bottom: 0.3rem; }
+  .ib-val { font-size: 0.88rem; font-weight: 300; color: rgba(240,238,233,0.75); line-height: 1.6; }
+  .bk-form { display: flex; flex-direction: column; gap: 1.2rem; }
+  .bk-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+  .fg { display: flex; flex-direction: column; gap: 0.4rem; }
+  .fg label { font-size: 0.65rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--red-light); }
+  .fg input, .fg select, .fg textarea { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); color: var(--white); padding: 0.9rem 1rem; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; font-weight: 300; outline: none; transition: border-color 0.2s; appearance: none; }
+  .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--red); }
+  .fg select option { background: #191919; }
+  .fg textarea { resize: vertical; min-height: 85px; }
+  .bk-btn { background: var(--red); color: var(--white); border: none; padding: 1.1rem; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: background 0.2s; margin-top: 0.4rem; }
+  .bk-btn:hover { background: var(--red-light); }
+
+  /* REVIEWS */
+  #reviews { padding: 7rem 4rem; background: var(--black); }
+  .rv-top { display: flex; align-items: center; gap: 3rem; margin-bottom: 4rem; padding-bottom: 3rem; border-bottom: 1px solid var(--border); }
+  .rv-big { font-family: 'Bebas Neue', sans-serif; font-size: 7rem; color: var(--red); line-height: 1; }
+  .rv-stars { font-size: 1.5rem; color: #f1c40f; letter-spacing: 0.05em; }
+  .rv-count { font-size: 0.78rem; color: var(--mid); margin-top: 0.3rem; }
+  .rv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
+  .rv-card { background: var(--grey); padding: 2.2rem; border: 1px solid var(--border); transition: border-color 0.25s, transform 0.25s; }
+  .rv-card:hover { border-color: rgba(192,57,43,0.25); transform: translateY(-3px); }
+  .rv-s { color: #f1c40f; font-size: 0.88rem; margin-bottom: 1.2rem; }
+  .rv-t { font-size: 0.88rem; color: rgba(240,238,233,0.62); line-height: 1.75; font-style: italic; font-weight: 300; margin-bottom: 1.4rem; }
+  .rv-a { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red-light); }
+
+  /* FIND US */
+  #findus { padding: 7rem 4rem; background: var(--grey); }
+  .fu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; margin-top: 3rem; }
+  .map-wrap { background: url('https://images.unsplash.com/photo-1567521464027-f127ff144326?w=800&q=80') center/cover no-repeat; height: 420px; position: relative; overflow: hidden; border: 1px solid rgba(192,57,43,0.15); }
+  .map-wrap::after { content: ''; position: absolute; inset: 0; background: rgba(7,7,9,0.55); }
+  .map-inner { position: absolute; inset: 0; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 1rem; text-align: center; padding: 2rem; }
+  .map-icon { font-size: 2.5rem; }
+  .map-addr-text { font-size: 0.88rem; color: rgba(240,238,233,0.9); font-weight: 300; line-height: 1.7; }
+  .map-btn { background: var(--red); color: var(--white); text-decoration: none; padding: 0.7rem 1.8rem; font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; transition: background 0.2s; }
+  .map-btn:hover { background: var(--red-light); }
+  .h-title { font-family: 'Bebas Neue', sans-serif; font-size: 2rem; margin-bottom: 1.5rem; }
+  .h-list { list-style: none; margin-bottom: 2.5rem; }
+  .h-list li { display: flex; justify-content: space-between; padding: 0.85rem 0; border-bottom: 1px solid var(--border); font-size: 0.85rem; font-weight: 300; }
+  .h-list li span:first-child { color: var(--mid); }
+  .h-list li.open-today span { color: var(--red-light); font-weight: 500; }
+  .contact-row { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .c-btn { display: flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1.3rem; border: 1px solid rgba(255,255,255,0.1); color: var(--white); text-decoration: none; font-size: 0.78rem; letter-spacing: 0.08em; transition: border-color 0.2s, color 0.2s; }
+  .c-btn:hover { border-color: var(--red); color: var(--red-light); }
+
+  /* FOOTER */
+  footer { background: var(--black); border-top: 1px solid rgba(192,57,43,0.12); padding: 3rem 4rem; }
+  .ft { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem; }
+  .fl { font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; color: var(--white); }
+  .fl span { color: var(--red); }
+  .fn { display: flex; gap: 2.5rem; }
+  .fn a { color: var(--mid); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; transition: color 0.2s; }
+  .fn a:hover { color: var(--red-light); }
+  .fb { display: flex; justify-content: space-between; padding-top: 1.5rem; border-top: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; }
+  .fc { font-size: 0.73rem; color: var(--mid); font-weight: 300; }
+  .fsl { font-size: 0.73rem; color: rgba(192,57,43,0.45); font-style: italic; }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: translateY(0); } }
+
+  @media (max-width: 900px) {
+    nav { padding: 1.2rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { padding: 0 1.5rem 8rem; }
+    .hero-strip { flex-wrap: wrap; }
+    .hero-strip-item { flex: 1 1 50%; border-bottom: 1px solid var(--border); }
+    .about { grid-template-columns: 1fr; }
+    .about-photo { height: 280px; }
+    .about-photo::after { display: none; }
+    .about-copy { padding: 3rem 1.5rem; }
+    #services, #booking, #reviews, #findus { padding: 4rem 1.5rem; }
+    .svc-grid { grid-template-columns: 1fr 1fr; }
+    .gal-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+    .gi { height: 180px; }
+    .gi:first-child { grid-row: auto; }
+    .gal-header { padding: 4rem 1.5rem 2rem; }
+    .bk-grid, .fu-grid, .rv-grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    .bk-row { grid-template-columns: 1fr; }
+    footer { padding: 2rem 1.5rem; }
+    .ft, .fb { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">Allan <span>Barbers</span></div>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#gallery">Gallery</a></li>
+    <li><a href="#booking">Book</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#findus">Find Us</a></li>
+  </ul>
+  <a href="#booking" class="nav-book">Book Now</a>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-ov1"></div>
+  <div class="hero-ov2"></div>
+  <div class="hero-content">
+    <div class="hero-pill">⭐ 4.8 Rating · 140 Reviews · Saint Helens</div>
+    <h1>Your<br><span>Cut.</span><br>Done Right.</h1>
+    <p class="hero-desc">Proper service, great prices, no time wasted. Saint Helens' favourite barber shop — walk in or book online today.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-red">Book Appointment</a>
+      <a href="#services" class="btn-ghost">Our Services</a>
+    </div>
+  </div>
+  <div class="hero-strip">
+    <div class="hero-strip-item"><div class="hsi-num">4.8</div><div class="hsi-label">Google Rating</div></div>
+    <div class="hero-strip-item"><div class="hsi-num">140+</div><div class="hsi-label">Reviews</div></div>
+    <div class="hero-strip-item"><div class="hsi-num">18</div><div class="hsi-label">Services</div></div>
+    <div class="hero-strip-item"><div class="hsi-num">7pm</div><div class="hsi-label">Open Until</div></div>
+  </div>
+</section>
+
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ti">Fade Cut ✦</span><span class="ti">Hot Towel Shave ✦</span><span class="ti">Beard Trim ✦</span><span class="ti">Hair Colouring ✦</span><span class="ti">Head Shave ✦</span><span class="ti">Children's Cuts ✦</span><span class="ti">Turkish Shave ✦</span><span class="ti">Walk-ins Welcome ✦</span><span class="ti">Allan Barbers St Helens ✦</span><span class="ti">Eyebrow Threading ✦</span><span class="ti">Face Mask ✦</span>
+    <span class="ti">Fade Cut ✦</span><span class="ti">Hot Towel Shave ✦</span><span class="ti">Beard Trim ✦</span><span class="ti">Hair Colouring ✦</span><span class="ti">Head Shave ✦</span><span class="ti">Children's Cuts ✦</span><span class="ti">Turkish Shave ✦</span><span class="ti">Walk-ins Welcome ✦</span><span class="ti">Allan Barbers St Helens ✦</span><span class="ti">Eyebrow Threading ✦</span><span class="ti">Face Mask ✦</span>
+  </div>
+</div>
+
+<div class="about">
+  <div class="about-photo"></div>
+  <div class="about-copy">
+    <div class="tag">About Us</div>
+    <h2>Saint Helens' Favourite Barber</h2>
+    <p>At Allan Barbers, we pride ourselves on delivering proper service at great prices — every single time. No fuss, no waiting around, just exceptional cuts and a welcoming atmosphere.</p>
+    <p>From classic scissor cuts to hot towel shaves and Turkish shaves, our experienced barbers handle it all. Kids welcome too!</p>
+    <div class="about-nums">
+      <div><div class="an-num">4.8</div><div class="an-label">Star Rating</div></div>
+      <div><div class="an-num">140+</div><div class="an-label">Reviews</div></div>
+      <div><div class="an-num">18</div><div class="an-label">Services</div></div>
+    </div>
+  </div>
+</div>
+
+<section id="services">
+  <div class="sh">
+    <div><div class="tag">Everything We Do</div><div class="st">Our Services</div></div>
+    <a href="#booking" class="btn-red">Book Now</a>
+  </div>
+  <div class="svc-grid">
+    <div class="svc-card"><div class="svc-icon">✂️</div><div class="svc-name">Fade Cut</div><div class="svc-desc">Precision skin fades and tapers tailored to your head shape and style.</div></div>
+    <div class="svc-card"><div class="svc-icon">💈</div><div class="svc-name">Scissor Cut</div><div class="svc-desc">Classic scissor technique for a natural, textured finish every time.</div></div>
+    <div class="svc-card"><div class="svc-icon">🪒</div><div class="svc-name">Razor Cut</div><div class="svc-desc">Sharp razor cuts for a clean, defined look with crisp edges.</div></div>
+    <div class="svc-card"><div class="svc-icon">🧔</div><div class="svc-name">Beard Trim</div><div class="svc-desc">Expert beard shaping, trimming and lining for a polished look.</div></div>
+    <div class="svc-card"><div class="svc-icon">🫧</div><div class="svc-name">Hot Towel Shave</div><div class="svc-desc">The ultimate shave experience — warm towels, rich lather, straight razor.</div></div>
+    <div class="svc-card"><div class="svc-icon">🇹🇷</div><div class="svc-name">Turkish Shave</div><div class="svc-desc">A traditional Turkish shave experience for an ultra-smooth finish.</div></div>
+    <div class="svc-card"><div class="svc-icon">⚡</div><div class="svc-name">Straight Razor</div><div class="svc-desc">Old school straight razor shave for the smoothest result possible.</div></div>
+    <div class="svc-card"><div class="svc-icon">🙋</div><div class="svc-name">Head Shave</div><div class="svc-desc">Full head shave done safely and smoothly with professional tools.</div></div>
+    <div class="svc-card"><div class="svc-icon">📐</div><div class="svc-name">Hair Shape-Up</div><div class="svc-desc">Clean line-ups and shape-ups to keep your cut looking fresh.</div></div>
+    <div class="svc-card"><div class="svc-icon">🎨</div><div class="svc-name">Hair Colouring</div><div class="svc-desc">Professional colour treatments for a fresh new look.</div></div>
+    <div class="svc-card"><div class="svc-icon">🧒</div><div class="svc-name">Children's Cuts</div><div class="svc-desc">Fun, friendly haircuts for kids in a relaxed and welcoming environment.</div></div>
+    <div class="svc-card"><div class="svc-icon">🌿</div><div class="svc-name">Face Mask</div><div class="svc-desc">Rejuvenating face masks to leave your skin feeling fresh and clean.</div></div>
+    <div class="svc-card"><div class="svc-icon">💨</div><div class="svc-name">Steamer</div><div class="svc-desc">Deep steaming treatment to open pores and prep skin for the perfect shave.</div></div>
+    <div class="svc-card"><div class="svc-icon">🧵</div><div class="svc-name">Eyebrow Threading</div><div class="svc-desc">Precise eyebrow shaping and threading for clean, defined brows.</div></div>
+    <div class="svc-card"><div class="svc-icon">👤</div><div class="svc-name">Face Threading</div><div class="svc-desc">Full face threading to remove unwanted hair for a smooth, clean look.</div></div>
+    <div class="svc-card"><div class="svc-icon">🚶</div><div class="svc-name">Walk-In Service</div><div class="svc-desc">No appointment? No problem. Walk-ins always welcome at Allan Barbers.</div></div>
+  </div>
+</section>
+
+<section id="gallery" style="background:var(--black);">
+  <div class="gal-header"><div class="tag">Our Work</div><div class="st">Gallery</div></div>
+  <div class="gal-grid">
+    <div class="gi"><img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=900&q=80" alt="Shop interior"></div>
+    <div class="gi"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt="Haircut"></div>
+    <div class="gi"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80" alt="Barber tools"></div>
+    <div class="gi"><img src="https://images.unsplash.com/photo-1521490683712-35a1cb235d1b?w=600&q=80" alt="Barber chair"></div>
+    <div class="gi"><img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80" alt="Hot shave"></div>
+  </div>
+</section>
+
+<section id="booking">
+  <div class="tag">Reserve Your Spot</div>
+  <div class="st">Book an Appointment</div>
+  <div class="bk-grid">
+    <div>
+      <div class="bk-side-img"><div class="bk-badge">Walk-ins Always Welcome</div></div>
+      <div class="ib"><div class="ib-lbl">📍 Address</div><div class="ib-val">64 Sherlock Ave, Saint Helens<br>WA11 0PQ</div></div>
+      <div class="ib"><div class="ib-lbl">📞 Phone</div><div class="ib-val">07863 170399</div></div>
+      <div class="ib"><div class="ib-lbl">🕐 Opening Hours</div><div class="ib-val">Open today until 7:00 PM<br>Walk-ins always welcome</div></div>
+      <div class="ib"><div class="ib-lbl">⭐ Rating</div><div class="ib-val">4.8 / 5 · 140 Google Reviews</div></div>
+    </div>
+    <form class="bk-form" onsubmit="handleBook(event)">
+      <div class="bk-row">
+        <div class="fg"><label>First Name</label><input type="text" placeholder="Your name" required></div>
+        <div class="fg"><label>Phone Number</label><input type="tel" placeholder="07xxx xxxxxx" required></div>
+      </div>
+      <div class="fg">
+        <label>Service</label>
+        <select required>
+          <option value="" disabled selected>Choose a service</option>
+          <option>Fade Cut</option>
+          <option>Scissor Cut</option>
+          <option>Razor Cut</option>
+          <option>Beard Trim</option>
+          <option>Hot Towel Shave</option>
+          <option>Turkish Shave</option>
+          <option>Straight Razor Shave</option>
+          <option>Head Shave</option>
+          <option>Hair Shape-Up</option>
+          <option>Hair Colouring</option>
+          <option>Children's Cut</option>
+          <option>Face Mask</option>
+          <option>Steamer</option>
+          <option>Eyebrow Threading</option>
+          <option>Face Threading</option>
+          <option>Cut & Shave Combo</option>
+        </select>
+      </div>
+      <div class="bk-row">
+        <div class="fg"><label>Preferred Date</label><input type="date" required></div>
+        <div class="fg">
+          <label>Preferred Time</label>
+          <select required>
+            <option value="" disabled selected>Select time</option>
+            <option>9:00 AM</option><option>9:30 AM</option><option>10:00 AM</option><option>10:30 AM</option>
+            <option>11:00 AM</option><option>11:30 AM</option><option>12:00 PM</option><option>12:30 PM</option>
+            <option>1:00 PM</option><option>1:30 PM</option><option>2:00 PM</option><option>2:30 PM</option>
+            <option>3:00 PM</option><option>3:30 PM</option><option>4:00 PM</option><option>4:30 PM</option>
+            <option>5:00 PM</option><option>5:30 PM</option><option>6:00 PM</option><option>6:30 PM</option>
+          </select>
+        </div>
+      </div>
+      <div class="fg"><label>Notes (optional)</label><textarea placeholder="Any specific style requests..."></textarea></div>
+      <button type="submit" class="bk-btn">Request Appointment →</button>
+    </form>
+  </div>
+</section>
+
+<section id="reviews">
+  <div class="tag">What People Say</div>
+  <div class="st">Customer Reviews</div>
+  <div class="rv-top">
+    <div class="rv-big">4.8</div>
+    <div><div class="rv-stars">★★★★★</div><div class="rv-count">Based on 140 Google Reviews</div></div>
+  </div>
+  <div class="rv-grid">
+    <div class="rv-card">
+      <div class="rv-s">★★★★★</div>
+      <div class="rv-t">"Proper service, great prices, no time wasted! Exactly what you want from a barber. Been coming here for years and never disappointed."</div>
+      <div class="rv-a">Google Review · Verified Customer</div>
+    </div>
+    <div class="rv-card">
+      <div class="rv-s">★★★★★</div>
+      <div class="rv-t">"Great staff very friendly and do a great mens haircut for a good price. Always leave feeling fresh and looking sharp."</div>
+      <div class="rv-a">Google Review · Verified Customer</div>
+    </div>
+    <div class="rv-card">
+      <div class="rv-s">★★★★★</div>
+      <div class="rv-t">"Feel fresh, skin fade was spot on and my son really enjoyed his haircut too. Great for the whole family. Highly recommended!"</div>
+      <div class="rv-a">Google Review · Verified Customer</div>
+    </div>
+  </div>
+</section>
+
+<section id="findus">
+  <div class="tag">Come Visit</div>
+  <div class="st">Find Us</div>
+  <div class="fu-grid">
+    <div class="map-wrap">
+      <div class="map-inner">
+        <div class="map-icon">📍</div>
+        <div class="map-addr-text">64 Sherlock Ave<br>Saint Helens, WA11 0PQ</div>
+        <a href="https://maps.google.com/?q=64+Sherlock+Ave+Saint+Helens+WA11+0PQ" target="_blank" class="map-btn">Open in Google Maps</a>
+      </div>
+    </div>
+    <div>
+      <div class="h-title">Opening Hours</div>
+      <ul class="h-list">
+        <li><span>Monday</span><span>9:00 AM – 7:00 PM</span></li>
+        <li><span>Tuesday</span><span>9:00 AM – 7:00 PM</span></li>
+        <li><span>Wednesday</span><span>9:00 AM – 7:00 PM</span></li>
+        <li class="open-today"><span>Thursday ✦</span><span>9:00 AM – 7:00 PM</span></li>
+        <li><span>Friday</span><span>9:00 AM – 7:00 PM</span></li>
+        <li><span>Saturday</span><span>9:00 AM – 7:00 PM</span></li>
+        <li><span>Sunday</span><span>Closed</span></li>
+      </ul>
+      <div class="contact-row">
+        <a href="tel:07863170399" class="c-btn">📞 Call Us</a>
+        <a href="https://maps.google.com/?q=64+Sherlock+Ave+Saint+Helens" target="_blank" class="c-btn">🗺 Directions</a>
+        <a href="#booking" class="c-btn">📅 Book Online</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="ft">
+    <div class="fl">Allan <span>Barbers</span></div>
+    <nav class="fn">
+      <a href="#services">Services</a>
+      <a href="#gallery">Gallery</a>
+      <a href="#booking">Book</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#findus">Find Us</a>
+    </nav>
+  </div>
+  <div class="fb">
+    <div class="fc">© 2026 Allan Barbers · 64 Sherlock Ave, Saint Helens, WA11 0PQ · 07863 170399</div>
+    <div class="fsl">Proper Service. Great Prices. No Time Wasted.</div>
+  </div>
+</footer>
+
+<script>
+  function handleBook(e) {
+    e.preventDefault();
+    const btn = e.target.querySelector('.bk-btn');
+    btn.textContent = "✓ Request Sent! We'll be in touch.";
+    btn.style.background = '#1a6b3a';
+    setTimeout(() => {
+      btn.textContent = 'Request Appointment →';
+      btn.style.background = '';
+      e.target.reset();
+    }, 4000);
+  }
+  const d = document.querySelector('input[type="date"]');
+  if (d) d.min = new Date().toISOString().split('T')[0];
+</script>
+</body>
+</html>
